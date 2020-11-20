@@ -22,8 +22,26 @@
                         <div class="invalid-feedback" v-if="errors.judul">{{errors.judul[0]}}</div>
                     </div>
 
-                    <button type="button" class="btn btn-outline-secondary btn-sm mr-2" data-dismiss="modal" ref="modalClose">Close</button>
-                    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm mr-2 float-left" data-dismiss="modal" ref="modalClose">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm d-flex float-left">
+                        Submit
+                        <template v-if="btnLoading">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: none; display: block; shape-rendering: auto;" width="20px" height="22.5px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="ml-1">
+                                <rect x="17.5" y="30" width="15" height="40" fill="#85a2b6">
+                                    <animate attributeName="y" repeatCount="indefinite" dur="0.7299270072992701s" calcMode="spline" keyTimes="0;0.5;1" values="18;30;30" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.145985401459854s"></animate>
+                                    <animate attributeName="height" repeatCount="indefinite" dur="0.7299270072992701s" calcMode="spline" keyTimes="0;0.5;1" values="64;40;40" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.145985401459854s"></animate>
+                                    </rect>
+                                    <rect x="42.5" y="30" width="15" height="40" fill="#bbcedd">
+                                    <animate attributeName="y" repeatCount="indefinite" dur="0.7299270072992701s" calcMode="spline" keyTimes="0;0.5;1" values="20.999999999999996;30;30" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.072992700729927s"></animate>
+                                    <animate attributeName="height" repeatCount="indefinite" dur="0.7299270072992701s" calcMode="spline" keyTimes="0;0.5;1" values="58.00000000000001;40;40" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.072992700729927s"></animate>
+                                    </rect>
+                                    <rect x="67.5" y="30" width="15" height="40" fill="#dce4eb">
+                                    <animate attributeName="y" repeatCount="indefinite" dur="0.7299270072992701s" calcMode="spline" keyTimes="0;0.5;1" values="20.999999999999996;30;30" keySplines="0 0.5 0.5 1;0 0.5 0.5 1"></animate>
+                                    <animate attributeName="height" repeatCount="indefinite" dur="0.7299270072992701s" calcMode="spline" keyTimes="0;0.5;1" values="58.00000000000001;40;40" keySplines="0 0.5 0.5 1;0 0.5 0.5 1"></animate>
+                                </rect>
+                            </svg>
+                        </template> 
+                    </button>
                 </form>
             </div>
         </div>
@@ -41,6 +59,7 @@ export default {
                 content: ''
             },
             errors: [],
+            btnLoading: false
         }
     },
     computed: {
@@ -50,6 +69,7 @@ export default {
     },
     methods: {
         submit(){
+            this.btnLoading = true
             this.$Progress.start()
             this.$store.dispatch('blog/storeBlog', this.form).then(() => {
                 this.$toasted.show(this.message, {
@@ -60,6 +80,7 @@ export default {
                 this.$refs.modalClose.click();
                 this.form.judul = '';
                 this.form.content = '';
+                this.btnLoading = false
             }).catch((e) => {
                 this.errors = e.response.data.data
                 this.$toasted.show(e.response.data.message, {
@@ -67,6 +88,7 @@ export default {
                     position: 'bottom-right',
                     duration: 2000
                 })
+                this.btnLoading = false
             })
             this.$Progress.finish()
         }
