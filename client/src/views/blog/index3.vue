@@ -13,9 +13,8 @@
             </div>
         </template>
         <template v-else>
-            <!-- <template v-if="blogId != null">  -->
-                <showBlog :blogId="blogId"/>
-                <editBlog :blogId="blogId"/>
+            <!-- <template v-if="blogId">  -->
+                <showEdit :blogId="blogId" :mode="modalMode"/>
                 <deleteBlog :blogId="blogId"/>
             <!-- </template> -->
             <table class="table table-striped">
@@ -33,8 +32,8 @@
                         <td>{{blog.judul}}</td>
                         <td>{{blog.content}}</td>
                         <td>
-                            <button class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#detailModal" @click="getBlogId(blog.id)"><i class="fas fa-eye mr-1"></i>Show</button>
-                            <button class="btn btn-outline-primary btn-sm mx-1" data-toggle="modal" data-target="#editModal" @click="getBlogId(blog.id)"><i class="fas fa-pencil-alt mr-1"></i>Edit</button>
+                            <button class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#showEditmodal" @click="showBlog(blog.id)"><i class="fas fa-eye mr-1"></i>Show</button>
+                            <button class="btn btn-outline-primary btn-sm mx-1" data-toggle="modal" data-target="#showEditmodal" @click="editBlog(blog.id)"><i class="fas fa-pencil-alt mr-1"></i>Edit</button>
                             <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal" @click="getBlogId(blog.id)"><i class="fas fa-trash-alt mr-1"></i>Delete</button>
                         </td>
                     </tr>
@@ -47,15 +46,15 @@
 <script>
 import {mapGetters} from 'vuex'
 import createBlog from './create'
-import showBlog from './show'
-import editBlog from './edit'
+import showEdit from './showEdit'
 import deleteBlog from './delete'
 export default {
     title: 'Manage Blog - VuexSpa',
-    components: {createBlog, showBlog, editBlog, deleteBlog},
+    components: {createBlog, showEdit, deleteBlog},
     data(){
         return{
-            blogId: null
+            blogId: null,
+            modalMode: ''
         }
     },
     created(){
@@ -76,6 +75,14 @@ export default {
         getBlogId(id){
             this.blogId = id;
         },
+        showBlog(id){
+            this.modalMode = 'showMode'
+            this.blogId = id;
+        },
+        editBlog(id){
+            this.modalMode = 'editMode'
+            this.blogId = id;
+        }
     },
 }
 </script>

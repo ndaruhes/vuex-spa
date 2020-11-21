@@ -38,11 +38,6 @@ export default {
             blog: 'blog/blog',
             loadingBlog: 'blog/loadingBlog'
         })
-    },
-    watch: {
-        blogId: function(){
-            this.$store.dispatch('blog/showBlog', this.$props.blogId);
-        }
     }
 }
 </script>

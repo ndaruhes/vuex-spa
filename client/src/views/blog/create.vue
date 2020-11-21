@@ -19,7 +19,7 @@
                     <div class="form-group">
                         <label for="">Content Blog</label>
                         <textarea class="form-control" :class="{'is-invalid': errors.content}" v-model="form.content"></textarea>
-                        <div class="invalid-feedback" v-if="errors.judul">{{errors.judul[0]}}</div>
+                        <div class="invalid-feedback" v-if="errors.content">{{errors.content[0]}}</div>
                     </div>
 
                     <button type="button" class="btn btn-outline-secondary btn-sm mr-2 float-left" data-dismiss="modal" ref="modalClose">Close</button>

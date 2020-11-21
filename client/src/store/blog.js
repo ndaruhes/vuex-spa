@@ -8,27 +8,10 @@ export default{
     namespaced: true,
     state: {
         blogs: [],
-        blog: [],
+        blog: {},
         loading: true,
         loadingBlog: false,
         message: ''
-    },
-    getters: {
-        blogs(state){
-            return state.blogs
-        },
-        blog(state){
-            return state.blog
-        },
-        loading(state){
-            return state.loading
-        },
-        loadingBlog(state){
-            return state.loadingBlog
-        },
-        message(state){
-            return state.message
-        }
     },
     mutations: {
         SET_BLOGS(state, data){
@@ -67,11 +50,34 @@ export default{
                 commit('SET_BLOG_LOADING_STATUS', false);
             })
         },
+        async updateBlog({commit, dispatch}, [id, credentials]){
+            await axios.patch(`blog/${id}`, credentials).then((response) => {
+                commit('SET_MESSAGE', response.data);
+                return dispatch('getBlogs');
+            });
+        },
         async deleteBlog({commit, dispatch}, id){
             await axios.delete(`blog/${id}`).then((response) => {
                 commit('SET_MESSAGE', response.data);
                 return dispatch('getBlogs');
             })
+        }
+    },
+    getters: {
+        blogs(state){
+            return state.blogs
+        },
+        blog(state){
+            return state.blog
+        },
+        loading(state){
+            return state.loading
+        },
+        loadingBlog(state){
+            return state.loadingBlog
+        },
+        message(state){
+            return state.message
         }
     }
 }

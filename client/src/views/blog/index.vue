@@ -14,7 +14,8 @@
         </template>
         <template v-else>
             <!-- <template v-if="blogId">  -->
-                <showEdit :blogId="blogId" :mode="modalMode"/>
+                <showBlog :blogId="blogId"/>
+                <editBlog :blogId="blogId"/>
                 <deleteBlog :blogId="blogId"/>
             <!-- </template> -->
             <table class="table table-striped">
@@ -32,8 +33,8 @@
                         <td>{{blog.judul}}</td>
                         <td>{{blog.content}}</td>
                         <td>
-                            <button class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#showEditmodal" @click="showBlog(blog.id)"><i class="fas fa-eye mr-1"></i>Show</button>
-                            <button class="btn btn-outline-primary btn-sm mx-1" data-toggle="modal" data-target="#showEditmodal" @click="editBlog(blog.id)"><i class="fas fa-pencil-alt mr-1"></i>Edit</button>
+                            <button class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#detailModal" @click="getBlogId(blog.id)"><i class="fas fa-eye mr-1"></i>Show</button>
+                            <button class="btn btn-outline-primary btn-sm mx-1" data-toggle="modal" data-target="#editModal" @click="getBlogId(blog.id)"><i class="fas fa-pencil-alt mr-1"></i>Edit</button>
                             <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal" @click="getBlogId(blog.id)"><i class="fas fa-trash-alt mr-1"></i>Delete</button>
                         </td>
                     </tr>
@@ -46,15 +47,15 @@
 <script>
 import {mapGetters} from 'vuex'
 import createBlog from './create'
-import showEdit from './showEdit'
+import showBlog from './show'
+import editBlog from './edit'
 import deleteBlog from './delete'
 export default {
     title: 'Manage Blog - VuexSpa',
-    components: {createBlog, showEdit, deleteBlog},
+    components: {createBlog, showBlog, editBlog, deleteBlog},
     data(){
         return{
-            blogId: null,
-            modalMode: ''
+            blogId: null
         }
     },
     created(){
@@ -75,16 +76,6 @@ export default {
         getBlogId(id){
             this.blogId = id;
         },
-        showBlog(id){
-            this.modalMode = 'showMode'
-            this.blogId = id;
-            console.log(this.blogId);
-        },
-        editBlog(id){
-            this.modalMode = 'editMode'
-            this.blogId = id;
-            console.log(this.blogId);
-        }
     },
 }
 </script>
