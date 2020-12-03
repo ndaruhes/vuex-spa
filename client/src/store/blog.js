@@ -32,32 +32,32 @@ export default{
     },
     actions: {
         async getBlogs({commit}){
-            await axios.get('blog').then((response) => {
+            await axios.get('blog').then(response => {
                 commit('SET_BLOGS', response.data);
                 commit('SET_LOADING_STATUS', false);
             })
         },
         async storeBlog({commit, dispatch}, credentials){
-            await axios.post('blog', credentials).then((response) => {
+            await axios.post('blog', credentials).then(response => {
                 commit('SET_MESSAGE', response.data)
                 return dispatch('getBlogs');
             })
         },
         async showBlog({commit}, id){
             commit('SET_BLOG_LOADING_STATUS', true);
-            await axios.get(`blog/${id}`).then((response) => {
+            await axios.get(`blog/${id}`).then(response => {
                 commit('SET_BLOG', response.data.blog);
                 commit('SET_BLOG_LOADING_STATUS', false);
             })
         },
         async updateBlog({commit, dispatch}, [id, credentials]){
-            await axios.patch(`blog/${id}`, credentials).then((response) => {
+            await axios.post(`blog/${id}?_method=PUT`, credentials).then(response => {
                 commit('SET_MESSAGE', response.data);
                 return dispatch('getBlogs');
             });
         },
         async deleteBlog({commit, dispatch}, id){
-            await axios.delete(`blog/${id}`).then((response) => {
+            await axios.delete(`blog/${id}`).then(response => {
                 commit('SET_MESSAGE', response.data);
                 return dispatch('getBlogs');
             })

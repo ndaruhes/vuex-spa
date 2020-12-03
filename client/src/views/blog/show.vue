@@ -18,7 +18,7 @@
                     </template>
                     <template v-else>
                         <h3>{{blog.judul}}</h3>
-                        <p>{{blog.content}}</p>
+                        <p v-html="blog.content"></p>
                     </template>
                 </div>
                 <div class="modal-footer">

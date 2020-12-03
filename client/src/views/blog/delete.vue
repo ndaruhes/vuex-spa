@@ -39,7 +39,9 @@
 </template>
 
 <script>
+import {bus} from '../../main'
 import {mapGetters} from 'vuex'
+
 export default {
     data(){
         return{
@@ -47,6 +49,7 @@ export default {
         }
     },
     props: ['blogId'],
+    name: 'deleteBlog',
     computed: {
         ...mapGetters({
             message: 'blog/message'
@@ -56,13 +59,10 @@ export default {
         deleteBlog(){
             this.btnLoading = true
             this.$store.dispatch('blog/deleteBlog', this.$props.blogId).then(()=> {
-                this.$toasted.show(this.message, {
-                    type: 'success',
-                    position: 'bottom-right',
-                    duration: 2000
-                })
                 this.$refs.modalClose.click()
                 this.btnLoading = false
+                bus.$emit('setToastMessage', {message: this.message, status: 'success'})
+                window.$('.toast').toast('show')
             });
         }
     }

@@ -18,4 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['namespace' => 'App\Http\Controllers'], function () {
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::get('profile', 'AuthController@profile');
+});
+
 Route::apiResource('blog', 'App\Http\Controllers\BlogController');

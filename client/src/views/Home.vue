@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  title: 'Home - VuexSpa',
+  title: 'Home - VuexAhay',
   created(){
     this.$Progress.start()
     this.$Progress.finish()

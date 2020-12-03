@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    // User::create([
+    //     'name' => 'Muhamad Ndaru',
+    //     'email' => 'muhamad.ndaru@gmail.com',
+    //     'password' => bcrypt('password'),
+    //     'role' => 'Admin'
+    // ]);
+
+    // User::create([
+    //     'name' => 'Raha Raditya',
+    //     'email' => 'raharaditya10@gmail.com',
+    //     'password' => bcrypt('password'),
+    //     'role' => 'Member'
+    // ]);
+
     return view('welcome');
 });
