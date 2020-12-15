@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 2020-12-11, v1.12.1
+
+This is a security release that prevents a hacker to execute code on the server.
+
+## 2020-11-23, v1.12.0
+
+- Fix ro_RO first and last day of year calculation offset (#65)
+- Fix en_NG locale test namespaces that did not match PSR-4 (#57)
+- Added Singapore NRIC/FIN provider (#56)
+- Added provider for Lithuanian municipalities (#58)
+- Added blood types provider (#61)
+
 ## 2020-11-15, v1.11.0
 
 - Added Provider for Swedish Municipalities

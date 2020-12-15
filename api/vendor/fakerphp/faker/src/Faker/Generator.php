@@ -14,6 +14,9 @@ namespace Faker;
  * @method string title(string $gender = null)
  * @property string $titleMale
  * @property string $titleFemale
+ * @property string $bloodType
+ * @property string $bloodRh
+ * @property string $bloodGroup
  *
  * @property string $citySuffix
  * @property string $streetSuffix
@@ -289,5 +292,10 @@ class Generator
     public function __destruct()
     {
         $this->seed();
+    }
+
+    public function __wakeup()
+    {
+        $this->formatters = [];
     }
 }
