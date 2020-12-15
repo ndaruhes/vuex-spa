@@ -14,9 +14,12 @@
                 </div>
             </template>
             <template v-else>
-                <showBlog :blogId="blogId"/>
-                <editBlog :blogId="blogId"/>
-                <deleteBlog :blogId="blogId"/>
+                <template v-if="blogId !=null">
+                    <showBlog :blogId="blogId"/>
+                    <editBlog :blogId="blogId"/>
+                    <deleteBlog :blogId="blogId"/>
+                </template>
+                
                 <table class="table table-striped">
                     <thead>
                         <tr>

@@ -24,7 +24,7 @@ export default{
     },
     actions: {
         async login({commit, dispatch}, credentials){
-            await axios.post('login', credentials).then((response) => {
+            await axios.post('login', credentials).then(response => {
                 commit('SET_MESSAGE', response.data.success);
                 return dispatch('attempt', response.data.token)
             })

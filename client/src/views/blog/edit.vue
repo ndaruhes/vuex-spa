@@ -98,6 +98,9 @@ export default {
             message: 'blog/message'
         })
     },
+    created(){
+        this.$store.dispatch('blog/showBlog', this.$props.blogId);
+    },
     watch: {
         blogId: function(){
             this.$store.dispatch('blog/showBlog', this.$props.blogId);

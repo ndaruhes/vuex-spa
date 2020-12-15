@@ -1,5 +1,5 @@
 <template>
-    <div class="toast alert-position" role="alert" aria-live="assertive" aria-atomic="true" data-animation="true" data-delay="1000" data-autohide="true" :class="{'bg-success': status == 'success', 'bg-danger': status == 'error'}">
+    <div class="toast alert-position" role="alert" aria-live="assertive" aria-atomic="true" data-animation="true" data-delay="1000" data-autohide="false" :class="{'bg-success': status == 'success', 'bg-danger': status == 'error'}">
         <div class="toast-header">
             <img src="@/assets/rock.png" class="rounded mr-2" alt="rock" width="20" v-if="status == 'success'">
             <img src="@/assets/sad.png" class="rounded mr-2" alt="rock" width="20" v-else-if="status == 'error'">

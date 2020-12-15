@@ -51,7 +51,8 @@ export default{
             })
         },
         async updateBlog({commit, dispatch}, [id, credentials]){
-            await axios.post(`blog/${id}?_method=PUT`, credentials).then(response => {
+            await axios.put(`blog/${id}`, credentials, {'Content-Type': 'application/json'}).then(response => {
+                console.log(response);
                 commit('SET_MESSAGE', response.data);
                 return dispatch('getBlogs');
             });

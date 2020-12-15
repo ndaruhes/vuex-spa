@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Image;
 use App\Models\Blog;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Image;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class BlogController extends Controller
 {
@@ -45,6 +47,42 @@ class BlogController extends Controller
                 'content.min' => 'Content minimal 3 huruf',
             ]
         );
+        // if ($validator->fails()) {
+        //     // return response()->json([
+        //     //     'error' => 'Harap isi data dengan benar',
+        //     //     'data' => $validator->errors()
+        //     // ], 400);
+        //     // return response()->json($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
+        // } 
+
+        // try{
+        //     $files = $request->file('cover');
+        //     $filename = $files->getClientOriginalName();
+        //     $Image = Str::random(10) . "-" . date('YmdHis') . "-" . $filename;
+        //     $files->storeAs('public/images/blogs', $Image);
+
+        //     $path = public_path('storage/images/blogs/' . $Image);
+        //     $img = Image::make($path)->resize(300, null, function ($constraint) {
+        //         $constraint->aspectRatio();
+        //     });
+        //     $img->save($path);
+
+        //     Blog::create([
+        //         'cover' => $Image,
+        //         'judul' => $request->judul,
+        //         'content' => $request->content,
+        //         'user_id' => Auth::user()->id
+        //     ]);
+        //     $response = [
+        //         'message' => 'Blog berhasil ditambah'
+        //     ];
+
+        //     return response()->json($response, Response::HTTP_CREATED);
+        // }catch(QueryException $e){
+        //     return response()->json([
+        //         'message' => 'Failed '.$e->errorInfo
+        //     ]);
+        // }
 
         if ($validator->fails()) {
             return response()->json([
@@ -76,7 +114,6 @@ class BlogController extends Controller
 
     public function update($id, Request $request)
     {
-        // dd('hahanjay');
         $validator = Validator::make(
             $request->all(),
             [
@@ -104,7 +141,7 @@ class BlogController extends Controller
             $filename = $files->getClientOriginalName();
             $Image = Str::random(10) . "-" . date('YmdHis') . "-" . $filename;
             $files->storeAs('public/images/blogs', $Image);
-            
+
             $path = public_path('storage/images/blogs/' . $Image);
             $img = Image::make($path)->resize(300, null, function ($constraint) {
                 $constraint->aspectRatio();
@@ -113,28 +150,28 @@ class BlogController extends Controller
             // dd($img);
 
             $blog = Blog::findOrFail($id);
+            if (Storage::exists('public/images/blogs/' . $blog->cover)) {
+                Storage::delete('public/images/blogs/' . $blog->cover);
+            }
             $blog->update([
                 'cover' => $Image,
                 'judul' => $request->judul,
                 'content' => $request->content
             ]);
-            if (Storage::exists('public/images/blogs/' . $blog->cover)) {
-                Storage::delete('public/images/blogs/' . $blog->cover);
-            }
             return response()->json('Blog berhasil diubah');
         }
     }
 
     public function destroy($id)
     {
-        try{
+        try {
             $blog = Blog::findOrFail($id);
             if (Storage::exists('public/images/blogs/' . $blog->cover)) {
                 Storage::delete('public/images/blogs/' . $blog->cover);
             }
             $blog->delete();
             return response()->json('Blog Berhasil dihapus');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return $e->getMessage();
         }
     }

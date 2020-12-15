@@ -17,7 +17,7 @@
                         </div>
 
                         <div class="form-group" v-if="image">
-                            <img :src="image" class="img-responsive w-100">
+                            <img :src="image" class="img-responsive w-50">
                         </div>
 
                         <div class="form-group">
@@ -101,6 +101,7 @@ export default {
                 bus.$emit('setToastMessage', {message: this.message, status: 'success'})
                 window.$('.toast').toast('show')
             }).catch(e => {
+                console.log(e.response);
                 this.errors = e.response.data.data
                 this.btnLoading = false
                 bus.$emit('setToastMessage', {message:  e.response.data.error, status: 'error'})
